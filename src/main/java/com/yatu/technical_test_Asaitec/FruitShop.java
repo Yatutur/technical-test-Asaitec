@@ -17,11 +17,12 @@ public class FruitShop {
 		
 		// Starts input
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Enter product and prices");
+		
+		// Product and price
+		System.out.println("Enter product and price: ");
 		//First line is file description
 		scan.nextLine();
 		boolean isCorrect = true;
-		Fruit fruit = new Fruit();
 		List<Fruit> fruits = new ArrayList<Fruit>();
 		
 		while(scan.hasNextLine()) {
@@ -37,17 +38,20 @@ public class FruitShop {
 			if(matcher.matches()) {
 				String name = matcher.group(1);
 				float price = Float.valueOf(matcher.group(3));
-				if(name.equals("Orange")) {
+				Fruit fruit = null;
+				
+				switch(name) {
+				case "Orange":
 					fruit = new Orange(price);
-				}
-				if(name.equals("Apple")) {
+					break;
+				case "Apple":
 					fruit = new Apple(price);
-				}
-				if(name.equals("Pear")) {
+					break;
+				case "Pear":
 					fruit = new Pear(price);
+					break;
 				}
 				fruits.add(fruit);
-//				System.out.println("Fruit:" + fruit.getName());
 			}else {
 				isCorrect = false;
 				break;
@@ -58,7 +62,8 @@ public class FruitShop {
 			System.out.println("\nInput is NOT correct");
 		}
 		
-		System.out.println("Enter product and prices");
+		// Product and quantity
+		System.out.println("Enter purchase: ");
 		//First line is file description
 		scan.nextLine();
 		float totalPrice = 0.0f;
@@ -70,30 +75,33 @@ public class FruitShop {
 			if(line.isEmpty()) {
 				break;
 			}
-			//System.out.println(line);
 			Pattern pattern = Pattern.compile("([\\w]+)([,\\s]*)(\\d*)");
 			Matcher matcher = pattern.matcher(line);
 			
 			if(matcher.matches()) {
 				String name = matcher.group(1);
 				int quantity = Integer.valueOf(matcher.group(3));
+				
 				for(Fruit a : fruits) {
 					if(a.getName().equals(name)) {
 						totalPrice += quantity*a.getPrice();
 					}
 				}
-				if(name.equals("Orange")) {
+				
+				Fruit fruit = null;
+				switch(name) {
+				case "Orange":
 					fruit = new Orange();
-				}
-				if(name.equals("Apple")) {
+					break;
+				case "Apple":
 					fruit = new Apple();
-				}
-				if(name.equals("Pear")) {
+					break;
+				case "Pear":
 					fruit = new Pear();
+					break;
 				}
 				fruitsPurchased.add(fruit);
 				
-//				System.out.println("Fruit:" + fruit.getName());
 			}else {
 				isCorrect = false;
 				break;
@@ -110,7 +118,7 @@ public class FruitShop {
 		System.out.println("\nTotal price: " + totalPrice);
 		
 		//List of purchased
-		System.out.println("\nList of purchased fruits");
+		System.out.println("\nList of products purchased");
 		for(Fruit a : fruitsPurchased) {
 			System.out.println(a.getName());
 		}
